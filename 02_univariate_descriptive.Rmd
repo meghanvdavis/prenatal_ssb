@@ -23,9 +23,6 @@ library(lattice)
 library(descr)
 library(flextable)
 
-# set working directory
-setwd('C:/Users/Meghan/Documents/Professional/SSB Paper')
-
 # read in data
 ssb_cohort <- read.csv('ssb_cohort.csv')
 ```
