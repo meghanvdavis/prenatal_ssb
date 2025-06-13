@@ -1,0 +1,1118 @@
+---
+title: "SSB Descriptive Data"
+author: "Meghan Visnick Davis"
+date: "2025-05-27"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(warning = FALSE,
+                      message = FALSE,
+                      echo = FALSE)
+```
+
+# Cohort
+
+Of the N = 1,090 observations in the provided dataset, n = 988 had some available exposure data, n = 467 had some available outcome data, and n = 442 had both. The following descriptive stats apply to the cohort of n = 442.
+
+```{r}
+# load libraries 
+library(tidyverse)
+library(mosaic)
+library(lattice)
+library(descr)
+library(flextable)
+
+# set working directory
+setwd('C:/Users/Meghan/Documents/Professional/SSB Paper')
+
+# read in data
+ssb_cohort <- read.csv('ssb_cohort.csv')
+```
+
+# Exposure Data
+
+Values for "_ECHO" variables are missing for most of the cohort. These frequencies are still presented alongside their counterpart variables. 
+
+SUGARFRUIT_DRINK_ECHO & HIGHCAFFEIN_SODA_ECHO values are missing for the entire original dataset of n = 1090 - possible data extraction error?
+
+## Sugar-sweetened soda 
+
+"During the past month, how often did you drink regular, carbonated pop, soda, or soft drinks that contain sugar?  Do not include diet soda.  READ IF NECESSARY:   Do not include diet or sugar-free fruit drinks.  Do not include juices or tea in cans.  Do not include diet mineral water or diet flavored waters."
+
+0 = Never ; 
+1 = 1-3 times last month ; 
+2 = 1-2 times per week ; 
+3 = 3-4 times per week ; 
+4 = 5-6 times per week ; 
+5 = 1 time per day ; 
+6 = 2 times per day ; 
+7 = 3 times per day ; 
+8 = 4 times per day ; 
+9 = 5 or more times per day ; 
+98 = Don't Know ; 
+99 = Refuse 
+
+```{r}
+# convert to factor variable
+ssb_cohort$SUGARSODA <- as.factor(ssb_cohort$SUGARSODA)
+
+# frequency tables
+freq(ssb_cohort$SUGARSODA,plot = FALSE)
+freq(ssb_cohort$SUGARSODA_ECHO,plot = FALSE)
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = SUGARSODA)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Sugar-sweetened soda",
+       y = "Frequency")
+plt
+```
+
+## Fruit juice
+
+"During the past month, how often did you drink 100% fruit juice, such as orange, mango, apple, and grape juices?  Do not include fruit drinks.   READ IF NECESSARY:   Include only 100% pure juices. Do not include fruit drinks with added sugar, like Kool-Aid®, Hi-C®, lemonade, cranberry cocktail, Gatorade®, Tampico®, and Sunny Delight®."
+
+0 = Never ; 
+1 = 1-3 times last month ; 
+2 = 1-2 times per week ; 
+3 = 3-4 times per week ; 
+4 = 5-6 times per week ; 
+5 = 1 time per day ; 
+6 = 2 times per day ; 
+7 = 3 times per day ; 
+8 = 4 times per day ; 
+9 = 5 or more times per day ; 
+98 = Don't Know ; 
+99 = Refuse 
+
+```{r}
+# convert to factor variable
+ssb_cohort$FRUITJUICE <- as.factor(ssb_cohort$FRUITJUICE)
+
+# frequency tables
+freq(ssb_cohort$FRUITJUICE,
+     plot = FALSE)
+freq(ssb_cohort$FRUITJUICE_ECHO,
+     plot = FALSE)
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = FRUITJUICE)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "100% Fruit juice",
+       y = "Frequency")
+plt
+```
+
+## Fruit-flavored drinks with added sugar
+
+"During the past month, how often did you drink fruit-flavored drinks with sugar (such as Kool-Aid®, Hi-C®, lemonade, or cranberry cocktail)?  Do not include diet drinks.  READ IF NECESSARY:   Include Gatorade® and other sports drinks with added sugar.   Include Tampico®, Sunny Delight® and Twister®.   Do not include 100% fruit juices or soda.  Do not include yogurt drinks or carbonated water."
+
+0 = Never ; 
+1 = 1-3 times last month ; 
+2 = 1-2 times per week ; 
+3 = 3-4 times per week ; 
+4 = 5-6 times per week ; 
+5 = 1 time per day ; 
+6 = 2 times per day ; 
+7 = 3 times per day ; 
+8 = 4 times per day ; 
+9 = 5 or more times per day ; 
+98 = Don't Know ; 
+99 = Refuse 
+
+```{r}
+# convert to factor variable
+ssb_cohort$SUGARFRUIT_DRINK <- as.factor(ssb_cohort$SUGARFRUIT_DRINK)
+
+# frequency table
+freq(ssb_cohort$SUGARFRUIT_DRINK,
+     plot = FALSE)
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = SUGARFRUIT_DRINK)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Fruit-flavored drinks with added sugar",
+       y = "Frequency")
+plt
+```
+
+
+## Highly-caffeinated sodas
+
+"During the past month, how often did you drink Jolt®, Surge®, Mountain Dew®, Red Bull® and other highly caffeinated sodas?"
+
+0 = Never ; 
+1 = less than once per month ; 
+2 = 1-3 times per month ; 
+3 = 1 time per week ; 
+4 = 2-4 times per week ; 
+5 = 5-6 times per week ; 
+6 = 1 time per day ; 
+7 = 2-3 times per day ; 
+8 = 4-5 times per day ; 
+9 = 6 or more times per day ; 
+98 = Don't Know ; 
+99 = Refuse 
+
+```{r}
+# convert to factor variable
+ssb_cohort$HIGHCAFFEIN_SODA <- as.factor(ssb_cohort$HIGHCAFFEIN_SODA)
+
+# frequency table
+freq(ssb_cohort$HIGHCAFFEIN_SODA,
+     plot = FALSE)
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = HIGHCAFFEIN_SODA)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Highly-caffeinated sodas",
+       y = "Frequency")
+plt
+```
+
+## Sweetened fruit drinks & Sugar sweetened coffee or tea
+
+During the past month, how often did you drink sweetened fruit drinks, sports or energy drinks, such as Kool-Aid, lemonade, Hi-C, cranberry drink, Gatorade, Red Bull, or Vitamin Water? Include fruit juices you made at home and added sugar to. Do not include diet drinks or artificially sweetened drinks.
+
+1 = Never ; 2 = 1 time last month ; 3 = 2-3 times last month ; 4 = 1 time per week ; 5 = 2 times per week ; 6 = 3-4 times per week ; 7 = 5-6 times per day ; 8 = 1 time per day; 9 = 2-3 times per day ; 10 = 4-5 tiems per day ; 11 = 6 or more times per day ; 98 = Don't Know ; 99 = Refuse 
+
+During the past month, how often did you drink coffee or tea that had sugar or honey added to it? Include coffee and tea you sweetened yourself and presweetened tea and coffee drinks such as Arizona Iced Tea or Frappuccino. Do not include artificially sweetened coffee or diet tea.
+
+1 = Never ;  2 = 1 time last month ; 3 = 2-3 times last month ; 4 = 1 time per week ; 5 = 2 times per week ; 6 = 3-4 times per week ; 7 = 5-6 times per week ; 8 = 1 time per day ; 8 = 2-3 times per day ; 10 = 4-5 times per day ; 11 = 6 or more times per day ; 98 = Don't Know ; 99 = Refuse
+
+Data almost entirely missing for these two. 
+
+```{r}
+# SWEETDRINK_ECHO
+
+## convert to factor variable
+ssb_cohort$SWEETDRINK_ECHO <- as.factor(ssb_cohort$SWEETDRINK_ECHO)
+
+## frequency table
+freq(ssb_cohort$SWEETDRINK_ECHO,
+     plot = FALSE)
+
+# SUGAR_HONEY_ECHO
+
+## convert to factor variable
+ssb_cohort$SUGAR_HONEY_ECHO <- as.factor(ssb_cohort$SUGAR_HONEY_ECHO)
+
+## frequency table
+freq(ssb_cohort$SUGAR_HONEY_ECHO,
+     plot = FALSE)
+```
+
+# Outcome Data
+
+Availability of CBQ data was largely what determined the size of this cohort. I followed the instrument scoring guidance to create score variables, which are the variables presented here. Per the guidance, scores were only included if less than or equal to 20% of items were missing or marked as not applicable. 
+
+ASQ-3 data was missing for about half the cohort (n = 225, n = 223, n = 223 for communication, problem solving, and personal-social, respectively). I only included the adjusted total scores here, after confirming that all adjusted totals were valid scores per the scoring guidance (with no more than 2 questions missing). 
+
+I also noticed there are two other ASQ-3 elements - gross motor and fine motor. I'm assuming these weren't of interest?
+
+## CBQ - Total score
+
+```{r}
+# cbq summary stats
+result <- favstats(ssb_cohort$cbq_total)
+
+result[] <- lapply(result, function(x) {
+  if (is.numeric(x)) round(x, 2) else x
+})
+
+flextable(result)
+
+# histogram
+histogram(ssb_cohort$cbq_total,
+          breaks = 30, 
+          main = "Distribution of CBQ - Total score", 
+          ylab = 'percent', 
+          type = 'percent')
+
+
+```
+
+## CBQ - Negative affect
+
+```{r}
+# cbq summary stats
+result <- favstats(ssb_cohort$cbq_na)
+
+result[] <- lapply(result, function(x) {
+  if (is.numeric(x)) round(x, 2) else x
+})
+
+flextable(result)
+
+# histogram
+histogram(ssb_cohort$cbq_na, 
+          breaks = 30,
+          main = "Distribution of CBQ - Negative affect score", 
+          ylab = 'percent', 
+          type = 'percent')
+```
+
+
+## CBQ - Surgency
+
+```{r}
+# cbq summary stats
+result <- favstats(ssb_cohort$cbq_surg)
+
+result[] <- lapply(result, function(x) {
+  if (is.numeric(x)) round(x, 2) else x
+})
+
+flextable(result)
+
+# histogram
+histogram(ssb_cohort$cbq_surg,
+          breaks = 30,
+          main = "Distribution of CBQ - Surgency", 
+          ylab = 'percent', 
+          type = 'percent')
+```
+
+
+## CBQ - Effort control 
+
+```{r}
+# cbq summary stats
+result <- favstats(ssb_cohort$cbq_ec)
+
+result[] <- lapply(result, function(x) {
+  if (is.numeric(x)) round(x, 2) else x
+})
+
+flextable(result)
+
+# histogram
+histogram(ssb_cohort$cbq_ec, 
+          breaks = 30,
+          main = "Distribution of CBQ - Effort control", 
+          ylab = 'percent', 
+          type = 'percent')
+```
+
+## ASQ-3 - Communication
+
+```{r}
+# asq-3 summary stats
+result <- favstats(ssb_cohort$asq_36_total_communication)
+
+result[] <- lapply(result, function(x) {
+  if (is.numeric(x)) round(x, 2) else x
+})
+
+flextable(result)
+
+# histogram
+histogram(ssb_cohort$asq_36_total_communication, 
+          breaks = 20,
+          main = "Distribution of ASQ-3 - Communication", 
+          ylab = 'percent', 
+          type = 'percent')
+```
+
+## ASQ-3 - Problem solving
+
+```{r}
+# asq-3 summary stats
+result <- favstats(ssb_cohort$asq_36_total_problemsolving)
+
+result[] <- lapply(result, function(x) {
+  if (is.numeric(x)) round(x, 2) else x
+})
+
+flextable(result)
+
+# histogram
+histogram(ssb_cohort$asq_36_total_problemsolving, 
+          breaks = 20,
+          main = "Distribution of ASQ-3 - Problem solving", 
+          ylab = 'percent', 
+          type = 'percent')
+```
+
+## ASQ-3 Personal-social
+
+```{r}
+# asq-3 summary stats
+result <- favstats(ssb_cohort$asq_36_total_personal_social)
+
+result[] <- lapply(result, function(x) {
+  if (is.numeric(x)) round(x, 2) else x
+})
+
+flextable(result)
+
+# histogram
+histogram(ssb_cohort$asq_36_total_personal_social, 
+          breaks = 20,
+          main = "Distribution of ASQ-3 - Personal-social", 
+          ylab = 'percent', 
+          type = 'percent')
+```
+
+# Potential confounders
+
+## Maternal age at childbirth
+
+Depending on the rationale for maternal age as a confounder, I'd consider treating this as a categorical variable and recoding with age groups, or at least plot age against both exposure and outcome variables to explore further - rationale being that the relationship between age and outcomes might be nonlinear. This could of course be true with any continuous variable, but particularly with maternal age during pregnancy we tend to see morbidity at both extremes of age. 
+
+```{r}
+# maternal age at birth summary stats
+result <- favstats(ssb_cohort$maternal_age_birth)
+
+result[] <- lapply(result, function(x) {
+  if (is.numeric(x)) round(x, 2) else x
+})
+
+flextable(result)
+
+# histogram
+histogram(ssb_cohort$maternal_age_birth, 
+          breaks = 20,
+          main = "Maternal age at birth (years)", 
+          ylab = 'percent', 
+          type = 'percent')
+```
+
+
+## Mother's race
+
+Lots of small numbers, would need to combine categories here - probably just White, Black, Other. 
+
+```{r}
+# frequency table
+freq(ssb_cohort$Mother_Race,
+     plot = FALSE)
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = Mother_Race)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Race of mother",
+       x = "Race",
+       y = "Frequency")
+plt + coord_flip()
+
+```
+
+## Mother's ethnicity
+
+I'd probably drop this as a variable, due to not enough observations in the hispanic/latina group. 
+
+```{r}
+# frequency table
+freq(ssb_cohort$Mother_Ethnicity,
+     plot = FALSE)
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = Mother_Ethnicity)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Ethnicity of mother",
+       x = "Ethnicity",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+## Height, Weight, Body mass index (BMI)
+
+I used height and weight variables to derive pre-pregnancy body mass index (BMI). Cut points for the categorical BMI variable are based on WHO/NIH clinical BMI classifications. 
+
+```{r}
+# create new height variable combining HEIGHT_FEET & HEIGHT_INCH
+ssb_cohort$height_inches <- ssb_cohort$HEIGHT_FEET*12 + ssb_cohort$HEIGHT_INCH
+
+# recode extreme weight outliers to missing
+ssb_cohort$PREWT_LBS[ssb_cohort$PREWT_LBS == 998] <- NA
+
+# create new variable for BMI
+ssb_cohort$prepreg_bmi <- (ssb_cohort$PREWT_LBS/(ssb_cohort$height_inches^2))*703
+
+# categorical bmi 
+ssb_cohort$bmi_cat <- cut(ssb_cohort$prepreg_bmi,
+                          breaks = c(-Inf, 18.5, 25, 30, Inf),
+                          labels = c("Underweight", "Normal", "Overweight", "Obese"),
+                          right = FALSE)  # Set to TRUE if upper bound is inclusive
+```
+
+### Height (inches)
+
+```{r}
+# height
+result <- favstats(ssb_cohort$height_inches)
+
+result[] <- lapply(result, function(x) {
+  if (is.numeric(x)) round(x, 2) else x
+})
+
+flextable(result)
+
+# histogram
+histogram(ssb_cohort$height_inches,
+          breaks = 20, 
+          main = "Distribution of height (inches)", 
+          ylab = 'percent', 
+          type = 'percent')
+```
+
+### Weight (lbs)
+
+There were 8 data entries of "998" lbs. The spread of weights all made sense otherwise. I excluded these from the summary stats. 
+
+```{r}
+# pre-preg weight
+result <- favstats(ssb_cohort$PREWT_LBS)
+
+result[] <- lapply(result, function(x) {
+  if (is.numeric(x)) round(x, 2) else x
+})
+
+flextable(result)
+
+# histogram
+histogram(ssb_cohort$PREWT_LBS,
+          breaks = 20, 
+          main = "Distribution of pre-pregnancy weight (lbs)", 
+          ylab = 'percent', 
+          type = 'percent')
+```
+
+### Pre-pregnancy BMI
+
+```{r}
+# bmi
+result <- favstats(ssb_cohort$prepreg_bmi)
+
+result[] <- lapply(result, function(x) {
+  if (is.numeric(x)) round(x, 2) else x
+})
+
+flextable(result)
+
+# histogram
+histogram(ssb_cohort$prepreg_bmi,
+          breaks = 25, 
+          main = "Distribution of BMI", 
+          ylab = 'percent', 
+          type = 'percent')
+
+# bmi category
+## frequency table
+freq(ssb_cohort$bmi_cat,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = bmi_cat)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Pre-pregnancy BMI",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+
+## Marital status
+
+Are you currently married, living with a partner, divorced, separated, widowed, or have you never been married?
+1 = Married ; 2 = Living with a partner ; 3 = Divorced ; 4 = Separated ; 5 = Widowed ; 6 = Never married ; 98 = Don't know ; 99 = Refuse
+
+Lots of small numbers, would need to combine categories. 
+
+```{r}
+# convert to character variable
+ssb_cohort$MARIT_STATUS <- as.factor(ssb_cohort$MARIT_STATUS)
+
+# frequency table
+freq(ssb_cohort$MARIT_STATUS,
+     plot = FALSE)
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = MARIT_STATUS)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Marital status",
+       y = "Frequency")
+plt 
+
+```
+
+## Parity
+
+Number of pregnancies carried to >20 weeks. Almost all are missing. 
+
+```{r}
+# convert to character variable
+ssb_cohort$mmra_b3c <- as.factor(ssb_cohort$mmra_b3c)
+
+# frequency table
+freq(ssb_cohort$mmra_b3c,
+     plot = FALSE)
+```
+
+## Child Race
+
+Like maternal race, I'd collapse this to White, Black, or Other. 
+
+```{r}
+# frequency table
+freq(ssb_cohort$Child_Race,
+     plot = FALSE)
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = Child_Race)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Race of child",
+       x = "Race",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+## Child Ethnicity
+
+Like maternal ethnicity, the numbers are  small in the hispanic/latino(a) group.
+
+```{r}
+# frequency table
+freq(ssb_cohort$Child_Ethnicity,
+     plot = FALSE)
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = Child_Ethnicity)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Ethnicity of child",
+       x = "Ethnicity",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+## Child - sex
+
+Two variables:
+
+dem_c_2: What is the sex of the child at the time of birth?
+1=Male |  2= Female | 3=Ambiguous |  7= Prefer not to answer, 8=Don't know
+
+cbra_c2: Sex of infant
+1= Male | 2= Female | 3= Ambiguous | -8= Not documented
+
+I was surprised these numbers weren't more even; I included the frequencies on the whole dataset here for comparison. 
+
+```{r}
+# explore sex variables
+freq(ssb_cohort$dem_c_2, 
+     plot = FALSE)          
+freq(ssb_cohort$cbmra_c2,
+     plot = FALSE)          # most are missing
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = dem_c_2)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Sex of child",
+       y = "Frequency")
+plt
+
+# explore sex variables on entire dataset
+ssb <- read.csv('C:/Users/Meghan/Documents/Professional/SSB Paper/Initial files from Kelly/Hirko08022024_Dataset 2.csv')
+freq(ssb$dem_c_2,
+     plot = FALSE)
+freq(ssb$cbmra_c2,
+     plot = FALSE)
+```
+
+## Child - birthweight
+
+I ran summary stats for all birthweight variables and didn't go through the trouble to label appropriately here - essentially all are missing. 
+
+```{r}
+favstats(ssb_cohort$cbmra_c7a_grams)
+favstats(ssb_cohort$cbmra_c7c_lbs)
+favstats(ssb_cohort$cbmra_c7c_oz)
+```
+
+## Child - gestational age at birth (weeks)
+
+```{r}
+# asq-3 summary stats
+result <- favstats(ssb_cohort$GA_Birth)
+
+result[] <- lapply(result, function(x) {
+  if (is.numeric(x)) round(x, 2) else x
+})
+
+flextable(result)
+
+# histogram
+histogram(ssb_cohort$GA_Birth, 
+          breaks = 20,
+          main = "Distribution of gestational age at birth (weeks)", 
+          ylab = 'percent', 
+          type = 'percent')
+```
+
+## Maternal educational level
+
+What is the highest grade or level of school you have completed or the highest degree you have received?
+
+1 = None ; 2 = 8th grade or less ; 3 = Some high school, no diploma ; 4 = High school graduate, diploma, or GED ; 5 = Some college credit, no degree ; 6 = Trade/Technical/Vocational training ; 7 = Associate degree ; 8 = Bachelor's degree ; 9 = Master's degree ; 10 = Doctorate or professional degree ; 98 = don't know ; 99 = refuse 
+
+```{r}
+# convert to factor variable
+ssb_cohort$EDUC_LVL <- as.factor(ssb_cohort$EDUC_LVL)
+
+# frequencies
+freq(ssb_cohort$EDUC_LVL, 
+     plot = FALSE)           
+
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = EDUC_LVL)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Maternal educational level",
+       y = "Frequency")
+plt
+```
+
+## Most recent income
+
+```{r}
+# frequencies
+freq(ssb_cohort$final_income, 
+     plot = FALSE)           
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = final_income)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Most recent income",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+## Age at weaning
+
+There were no data available for this cohort (Variable: MTHR_BRST_STOPAGE_ECHO). 
+
+## Substance use in pregnancy
+
+### Alcohol
+
+During this pregnancy, how many alcoholic drinks have you had in an average week?
+
+1 = 14 drinks or more a week ; 2 = 7 to 13 drinks a week ; 3 = 4 to 6 drinks a week ; 4 = 1 to 3 drinks a week ; 5 = Less than 1 drink a week ; 6 = I didn't drink ; 98 = Don't know ; Refuse
+
+```{r}
+## convert to categorical 
+ssb_cohort$ALCOH_DRINKPREG <- as.factor(ssb_cohort$ALCOH_DRINKPREG)
+
+## frequencies
+freq(ssb_cohort$ALCOH_DRINKPREG,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = ALCOH_DRINKPREG)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Alcohol use",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+### Hookah
+
+During this pregnancy, have you used a hookah?
+
+1 = Yes ; 5 = No ; 98 = Don't know ; 99 = Refuse
+
+```{r}
+# convert to categorical 
+ssb_cohort$HOOKAH_PREG <- as.factor(ssb_cohort$HOOKAH_PREG)
+
+# frequencies
+freq(ssb_cohort$HOOKAH_PREG,
+     plot = FALSE)
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = HOOKAH_PREG)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Hookah use",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+### E-cigarettes
+
+During this pregnancy, have you used e-cigarettes or other electronic nicotine products?
+
+1 = Yes ; 5 = No ; 98 = Don't know ; 99 = Refuse
+
+```{r}
+# convert to categorical 
+ssb_cohort$ECIGARETTE_PREG <- as.factor(ssb_cohort$ECIGARETTE_PREG)
+
+# frequencies
+freq(ssb_cohort$ECIGARETTE_PREG,
+     plot = FALSE)
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = ECIGARETTE_PREG)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "E-cigarette use",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+### Cigarettes
+
+Which of the following best describes your cigarette smoking?
+
+1 = I smoke regularly now; about the same as before finding out I was pregnant ; 2 = I smoke regularly now, but I've cut down since I found out I was pregnant = ; 3 = I smoke every once in a while ; 4 = I have quite smoking since finding out I was pregnant ; 5 = I wasn't smoking around the time I found out I was pregnant, and I don't currently smoke cigarettes ; 98 = Don't know ; 99 = Refuse 
+
+```{r}
+# convert to categorical 
+ssb_cohort$CIGARETTE_SMOKING <- as.factor(ssb_cohort$CIGARETTE_SMOKING)
+
+# frequencies
+freq(ssb_cohort$CIGARETTE_SMOKING,
+     plot = FALSE)
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = CIGARETTE_SMOKING)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Cigarette smoking",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+### Amphetamines
+
+Have you used Amphetamine type stimulants (e.g., “uppers”, Dexedrine, speed, Benzadrine, ecstasy) at all during this pregnancy?
+
+1 = Yes ; 5 = No ; 98 = Don't know ; 99 = Refuse
+
+(Same question and answer coding for both - looks like one is asked at the first prenatal visit and the other is asked at the second)
+
+```{r}
+# prenatal 1
+
+## convert to categorical 
+ssb_cohort$AMPHE_PREG <- as.factor(ssb_cohort$AMPHE_PREG)
+
+## frequencies
+freq(ssb_cohort$AMPHE_PREG,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = AMPHE_PREG)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Amphetamine use - Prenatal 1",
+       y = "Frequency")
+plt + coord_flip()
+
+# prenatal 2
+
+## convert to categorical 
+ssb_cohort$AMPHE_PREG2 <- as.factor(ssb_cohort$AMPHE_PREG2)
+
+## frequencies
+freq(ssb_cohort$AMPHE_PREG2,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = AMPHE_PREG2)) + 
+  geom_bar(fill = "#F8766D") +               
+  labs(title = "Amphetamine use - Prenatal 2",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+### Steroids
+
+Have you used steroids (e.g., dexamethasone, hydrocortisone, prednisone) at all during this pregnancy?
+
+1 = Yes ; 5 = No ; 98 = Don't know ; 99 = Refuse
+
+```{r}
+# prenatal 1
+
+## convert to categorical 
+ssb_cohort$STEROID_PREG <- as.factor(ssb_cohort$STEROID_PREG)
+
+## frequencies
+freq(ssb_cohort$STEROID_PREG,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = STEROID_PREG)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Steroid use - Prenatal 1",
+       y = "Frequency")
+plt + coord_flip()
+
+# prenatal 2
+
+## convert to categorical 
+ssb_cohort$STEROID_PREG2 <- as.factor(ssb_cohort$STEROID_PREG2)
+
+## frequencies
+freq(ssb_cohort$STEROID_PREG2,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = STEROID_PREG2)) + 
+  geom_bar(fill = "#F8766D") +               
+  labs(title = "Steroid use - Prenatal 2",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+### Tranquilizers
+
+Have you used tranquilizers (e.g., Xanax, Ativan, Valium, Buspar,) at all during this pregnancy?
+
+1 = Yes ; 5 = No ; 98 = Don't know ; 99 = Refuse
+
+```{r}
+# convert to categorical 
+ssb_cohort$TRANQUI_PREG <- as.factor(ssb_cohort$TRANQUI_PREG)
+
+# frequencies
+freq(ssb_cohort$TRANQUI_PREG,
+     plot = FALSE)
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = TRANQUI_PREG)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Tranquilizer use",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+### Marijuana
+
+Have you used marijuana (pot) or cannabis, including medically prescribed cannabis at all during this pregnancy?
+
+1 = Yes ; 5 = No ; 98 = Don't know ; 99 = Refuse
+
+```{r}
+# prenatal 1
+
+## convert to categorical 
+ssb_cohort$MARIJ_PREG <- as.factor(ssb_cohort$MARIJ_PREG)
+
+## frequencies
+freq(ssb_cohort$MARIJ_PREG,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = MARIJ_PREG)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Marijuana use - Prenatal 1",
+       y = "Frequency")
+plt + coord_flip()
+
+# prenatal 2
+
+## convert to categorical 
+ssb_cohort$MARIJ_PREG2 <- as.factor(ssb_cohort$MARIJ_PREG2)
+
+## frequencies
+freq(ssb_cohort$MARIJ_PREG2,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = MARIJ_PREG2)) + 
+  geom_bar(fill = "#F8766D") +               
+  labs(title = "Marijuana use - Prenatal 2",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+### Cocaine
+
+Have you used cocaine (e.g., powdered cocaine; crack; coke) at all during this pregnancy?
+
+1 = Yes ; 5 = No ; 98 = Don't know ; 99 = Refuse
+
+```{r}
+# prenatal 1
+
+## convert to categorical 
+ssb_cohort$COCAINE_PREG <- as.factor(ssb_cohort$COCAINE_PREG)
+
+## frequencies
+freq(ssb_cohort$COCAINE_PREG,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = COCAINE_PREG)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Cocaine use - Prenatal 1",
+       y = "Frequency")
+plt + coord_flip()
+
+# prenatal 2
+
+## convert to categorical 
+ssb_cohort$COCAINE_PREG2 <- as.factor(ssb_cohort$COCAINE_PREG2)
+
+## frequencies
+freq(ssb_cohort$COCAINE_PREG2,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = COCAINE_PREG2)) + 
+  geom_bar(fill = "#F8766D") +               
+  labs(title = "Cocaine use - Prenatal 2",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+### Methamphetamine
+
+Have you used methamphetamine (e.g., crystal, ice) at all during this pregnancy?
+
+1 = Yes ; 5 = No ; 98 = Don't know ; 99 = Refuse
+
+```{r}
+# prenatal 1
+
+## convert to categorical 
+ssb_cohort$METHAM_PREG <- as.factor(ssb_cohort$METHAM_PREG)
+
+## frequencies
+freq(ssb_cohort$METHAM_PREG,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = METHAM_PREG)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Methampetamine use - Prenatal 1",
+       y = "Frequency")
+plt + coord_flip()
+
+# prenatal 2
+
+## convert to categorical 
+ssb_cohort$METHAM_PREG2 <- as.factor(ssb_cohort$METHAM_PREG2)
+
+## frequencies
+freq(ssb_cohort$METHAM_PREG2,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = METHAM_PREG2)) + 
+  geom_bar(fill = "#F8766D") +               
+  labs(title = "Methamphetmine use - Prenatal 2",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+### Prescription Opioids
+
+Have you used prescription opioids (e.g. codeine, MS Contin, oxycontin, hydrocodone or Vicodin, oxycodone or Percocet, darvocet, demerol, morphine, fentanyl) at all during this pregnancy?
+
+1 = Yes ; 5 = No ; 98 = Don't know ; 99 = Refuse
+
+```{r}
+# prenatal 1
+
+## convert to categorical 
+ssb_cohort$OPIOID_PREG <- as.factor(ssb_cohort$OPIOID_PREG)
+
+## frequencies
+freq(ssb_cohort$OPIOID_PREG,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = OPIOID_PREG)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Prescription Opioid use - Prenatal 1",
+       y = "Frequency")
+plt + coord_flip()
+
+# prenatal 2
+
+## convert to categorical 
+ssb_cohort$OPIOID_PREG2 <- as.factor(ssb_cohort$OPIOID_PREG2)
+
+## frequencies
+freq(ssb_cohort$OPIOID_PREG2,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = OPIOID_PREG2)) + 
+  geom_bar(fill = "#F8766D") +               
+  labs(title = "Prescription Opioid use - Prenatal 2",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+### Non-prescription Opioids
+
+Have you used non-prescription opioids (heroin)  at all during this pregnancy?
+
+1 = Yes ; 5 = No ; 98 = Don't know ; 99 = Refuse
+
+*Side note: I think it's really interesting the way this and the previous questions are worded - what about people who have used opioid pills (not heroin) but without an Rx? 
+
+```{r}
+# prenatal 1
+
+## convert to categorical 
+ssb_cohort$NOPRESCOPIOID_PREG <- as.factor(ssb_cohort$NOPRESCOPIOID_PREG)
+
+## frequencies
+freq(ssb_cohort$NOPRESCOPIOID_PREG,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = NOPRESCOPIOID_PREG)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Non-prescription Opioid use - Prenatal 1",
+       y = "Frequency")
+plt + coord_flip()
+
+# prenatal 2
+
+## convert to categorical 
+ssb_cohort$NOPRESCOPIOID_PREG2 <- as.factor(ssb_cohort$NOPRESCOPIOID_PREG2)
+
+## frequencies
+freq(ssb_cohort$NOPRESCOPIOID_PREG2,
+     plot = FALSE)
+
+## bar chart
+plt <- ggplot(ssb_cohort, aes(x = NOPRESCOPIOID_PREG2)) + 
+  geom_bar(fill = "#F8766D") +               
+  labs(title = "Non-prescription Opioid use - Prenatal 2",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+### Opioid addiction treatments
+
+Have you used opioid addiction treatments (e.g. methadone, buprenorphine) at all during this pregnancy?
+
+1 = Yes ; 5 = No ; 98 = Don't know ; 99 = Refuse
+
+```{r}
+# convert to categorical 
+ssb_cohort$OPIOIDTREAT_PREG2 <- as.factor(ssb_cohort$OPIOIDTREAT_PREG2)
+
+# frequencies
+freq(ssb_cohort$OPIOIDTREAT_PREG2,
+     plot = FALSE)
+
+# bar chart
+plt <- ggplot(ssb_cohort, aes(x = OPIOIDTREAT_PREG2)) + 
+  geom_bar(fill = "#00BA38") +               
+  labs(title = "Use of Opioid addiction treatment",
+       y = "Frequency")
+plt + coord_flip()
+```
+
+```{r}
+# write new dataset
+write.csv(ssb_cohort,"ssb_cohort_2.csv") 
+
+```
+
